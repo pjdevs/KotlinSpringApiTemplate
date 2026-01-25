@@ -18,15 +18,18 @@ kotlin {
 }
 
 application {
-    mainClass.set("org.example.DemoApplication")
+    mainClass.set("org.example.demo.api.DemoApplication")
 }
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.2")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.3.0")
 
     implementation("org.springframework.boot:spring-boot-starter:4.0.2")
-    implementation("org.springframework.boot:spring-boot-starter-web:4.0.2")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.3.0")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:4.0.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:4.0.2")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     implementation(project(":domain"))
     implementation(project(":database"))

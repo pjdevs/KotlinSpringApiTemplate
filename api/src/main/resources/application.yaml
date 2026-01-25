@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:sqlite:demodatabase.db
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
