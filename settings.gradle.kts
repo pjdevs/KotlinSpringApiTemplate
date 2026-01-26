@@ -1,7 +1,7 @@
 rootProject.name = "demo"
 
 include(
+    "api",
     "domain",
-    "database",
-    "api"
+    "infra",
 )

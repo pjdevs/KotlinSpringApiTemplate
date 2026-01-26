@@ -29,10 +29,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter:4.0.2")
     implementation("org.springframework.boot:spring-boot-starter-webflux:4.0.2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:4.0.2")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-actuator:4.0.2")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.1")
+
+    implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
 
     implementation(project(":domain"))
-    implementation(project(":database"))
+    implementation(project(":infra"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:4.0.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.3.0")

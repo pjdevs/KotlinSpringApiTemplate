@@ -1,23 +1,53 @@
 package org.example.demo.api
 
-import org.example.demo.database.JpaSentenceRepository
-import org.example.demo.database.SentenceJpaRepository
-import org.example.demo.domain.ports.SentenceRepository
-import org.example.demo.domain.services.DatabaseSentenceService
-import org.example.demo.domain.services.RandomSentenceService
-import org.example.demo.domain.services.SentenceService
-import org.example.demo.domain.usecases.DemoUseCase
-import org.springframework.boot.persistence.autoconfigure.EntityScan
+import org.example.demo.domain.mocks.UnknownCurrentUserInfo
+import org.example.demo.domain.ports.CurrentUserInfo
+import org.example.demo.domain.ports.TimeProvider
+import org.example.demo.infra.persistence.JpaVideoReactionRepository
+import org.example.demo.infra.persistence.JpaVideoRepository
+import org.example.demo.infra.persistence.VideoJpaRepository
+import org.example.demo.infra.persistence.VideoReactionJpaRepository
+import org.example.demo.domain.ports.VideoReactionRepository
+import org.example.demo.domain.ports.VideoRepository
+import org.example.demo.domain.usecases.GetNextVideoUseCase
+import org.example.demo.domain.usecases.GetVideoByIdUseCase
+import org.example.demo.domain.usecases.ReactToVideoUseCase
+import org.example.demo.infra.time.SystemTimeProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @Configuration
 class DemoConfig {
+
     @Bean
-    fun sentenceRepository(jpaRepository: SentenceJpaRepository) : SentenceRepository = JpaSentenceRepository(jpaRepository)
+    fun videoRepository(jpaRepository: VideoJpaRepository): VideoRepository = JpaVideoRepository(jpaRepository)
+
     @Bean
-    fun sentenceService(sentenceRepository: SentenceRepository) : SentenceService = DatabaseSentenceService(sentenceRepository)
+    fun videoReactionRepository(jpaRepository: VideoReactionJpaRepository): VideoReactionRepository = JpaVideoReactionRepository(jpaRepository)
+
     @Bean
-    fun demoUseCase(sentenceService: SentenceService) : DemoUseCase = DemoUseCase(sentenceService)
+    fun getNextVideoUseCase(repository: VideoRepository): GetNextVideoUseCase = GetNextVideoUseCase(repository)
+
+    @Bean
+    fun getVideoByIdUseCase(repository: VideoRepository): GetVideoByIdUseCase = GetVideoByIdUseCase(repository)
+
+    @Bean
+    fun getTimeProvider(): TimeProvider = SystemTimeProvider()
+
+    @Bean
+    fun getCurrentUserInfo(): CurrentUserInfo = UnknownCurrentUserInfo()
+
+    @Bean
+    fun reactToToVideoUseCase(
+        videoRepository: VideoRepository,
+        reactionRepository: VideoReactionRepository,
+        timeProvider: TimeProvider,
+        currentUserInfo: CurrentUserInfo,
+    ): ReactToVideoUseCase = ReactToVideoUseCase(
+        videoRepository,
+        reactionRepository,
+        timeProvider,
+        currentUserInfo,
+    )
+
 }
