@@ -1,7 +1,7 @@
 package org.example.demo.infra.persistence
 
 import jakarta.persistence.Column
-import org.example.demo.domain.models.Video;
+import org.example.demo.domain.models.Video
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -9,11 +9,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.example.demo.domain.models.VideoId
 import org.example.demo.domain.models.VideoReaction
-import java.sql.Timestamp
 import kotlin.time.Instant
-import java.util.UUID
-import kotlin.time.toJavaInstant
-import kotlin.time.toKotlinInstant
 
 @Entity
 @Table(name = "video")
