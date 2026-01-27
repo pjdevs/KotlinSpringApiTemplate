@@ -1,7 +1,7 @@
 package org.example.demo.domain.models
 
 @JvmInline
-value class VideoId(val id: Long)
+value class VideoId(val id: Int)
 
 class Video(val id: VideoId, val platformName: String, val platformId: String, val title: String) {
     fun getVideoUrl() : String

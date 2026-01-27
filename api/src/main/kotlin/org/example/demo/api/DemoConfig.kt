@@ -10,6 +10,7 @@ import org.example.demo.infra.persistence.VideoReactionJpaRepository
 import org.example.demo.domain.ports.VideoReactionRepository
 import org.example.demo.domain.ports.VideoRepository
 import org.example.demo.domain.usecases.GetNextVideoUseCase
+import org.example.demo.domain.usecases.GetTrendingVideosUseCase
 import org.example.demo.domain.usecases.GetVideoByIdUseCase
 import org.example.demo.domain.usecases.ReactToVideoUseCase
 import org.example.demo.infra.time.SystemTimeProvider
@@ -30,6 +31,9 @@ class DemoConfig {
 
     @Bean
     fun getVideoByIdUseCase(repository: VideoRepository): GetVideoByIdUseCase = GetVideoByIdUseCase(repository)
+
+    @Bean
+    fun getTrendingVideosUseCase(repository: VideoRepository): GetTrendingVideosUseCase = GetTrendingVideosUseCase(repository)
 
     @Bean
     fun getTimeProvider(): TimeProvider = SystemTimeProvider()

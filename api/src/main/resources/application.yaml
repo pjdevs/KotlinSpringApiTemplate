@@ -1,6 +1,11 @@
+debug: true
+
 spring:
   application:
     name: demo
+
+  webflux:
+    base-path: /api
 
   datasource:
     url: jdbc:sqlite:demodatabase.db
@@ -8,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     show-sql: true
 
   flyway:
@@ -26,5 +31,3 @@ springdoc:
 logging:
   level:
     root: info
-
-debug: true

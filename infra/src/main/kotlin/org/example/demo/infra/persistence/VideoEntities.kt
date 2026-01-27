@@ -1,5 +1,6 @@
 package org.example.demo.infra.persistence
 
+import jakarta.persistence.Column
 import org.example.demo.domain.models.Video;
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -8,21 +9,26 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.example.demo.domain.models.VideoId
 import org.example.demo.domain.models.VideoReaction
+import java.sql.Timestamp
 import kotlin.time.Instant
 import java.util.UUID
+import kotlin.time.toJavaInstant
+import kotlin.time.toKotlinInstant
 
 @Entity
 @Table(name = "video")
 class VideoEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long?,
-    val platformName: String,
-    val platformId: String,
-    val title: String,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    val id: Int? = null,
+    @Column(name = "platform_name", nullable = false)
+    val platformName: String = "",
+    @Column(name = "platform_id", nullable = false)
+    val platformId: String = "",
+    @Column(name = "title", nullable = false)
+    val title: String = "",
 ) {
-    constructor() : this(null, "", "", "")
-
     fun toDomain() = Video(
         if (id == null) error("Entity with no id cannot be converted to domain") else VideoId(id),
         platformName,
@@ -35,22 +41,26 @@ class VideoEntity(
 @Table(name = "video_reaction")
 class VideoReactionEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long?,
-    val videoId: Long,
-    val reaction: String,
-    val userIdentity: String,
-    val timestamp: Long,
-    val date: Instant,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    val id: Int? = null,
+    @Column(name = "videoId", nullable = false)
+    val videoId: Int = 0,
+    @Column(name = "reaction", nullable = false)
+    val reaction: String = "",
+    @Column(name = "userIdentity", nullable = false)
+    val userIdentity: String = "",
+    @Column(name = "timestamp", nullable = false)
+    val timestamp: Long = 0,
+    @Column(name = "date", nullable = false)
+    val date: String = "",
 ) {
-    constructor() : this(null, 0, "", "", 0, Instant.DISTANT_PAST)
-
     fun toDomain() = VideoReaction(
         VideoId(videoId),
         reaction,
         userIdentity,
         timestamp,
-        date,
+        Instant.parse(date),
     )
 }
 
@@ -60,5 +70,5 @@ fun VideoReaction.toEntity() : VideoReactionEntity = VideoReactionEntity(
     reaction,
     userIdentity,
     timestamp,
-    date,
+    date.toString(),
 )

@@ -5,5 +5,5 @@ import org.example.demo.domain.models.VideoReaction
 
 interface VideoReactionRepository {
     suspend fun addReaction(reaction: VideoReaction): VideoReaction
-    suspend fun getAllReactionsFor(videoId: VideoId) : Array<VideoReaction>
+    suspend fun getAllReactionsFor(videoId: VideoId) : List<VideoReaction>
 }

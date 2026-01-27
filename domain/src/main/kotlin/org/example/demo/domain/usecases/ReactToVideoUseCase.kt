@@ -1,6 +1,8 @@
 package org.example.demo.domain.usecases
 
 import org.example.demo.domain.dtos.VideoReactionDto
+import org.example.demo.domain.exceptions.InvalidVideoRefException
+import org.example.demo.domain.exceptions.VideoNotFoundException
 import org.example.demo.domain.models.VideoReaction
 import org.example.demo.domain.models.VideoRef
 import org.example.demo.domain.ports.CurrentUserInfo
@@ -15,8 +17,8 @@ class ReactToVideoUseCase(
     private val currentUserInfo: CurrentUserInfo,
 ) {
     suspend fun execute(videoRefString: String, reaction: VideoReactionDto) {
-        val videoRef = VideoRef.fromString(videoRefString) ?: throw Exception("Malformed video ref $videoRefString")
-        val video = videoRepository.getVideoByRef(videoRef) ?: throw Exception("Video with ref $videoRef not found")
+        val videoRef = VideoRef.fromString(videoRefString) ?: throw InvalidVideoRefException(videoRefString)
+        val video = videoRepository.getVideoByRef(videoRef) ?: throw VideoNotFoundException(videoRef)
         val userIdentity = currentUserInfo.getUserName()
         val now = timeProvider.now()
         val validatedReaction = VideoReaction(

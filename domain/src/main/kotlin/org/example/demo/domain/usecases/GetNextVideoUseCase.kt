@@ -1,17 +1,19 @@
 package org.example.demo.domain.usecases
 
 import org.example.demo.domain.dtos.VideoDto
+import org.example.demo.domain.exceptions.InvalidStateException
 import org.example.demo.domain.ports.VideoRepository
 import kotlin.random.Random
 
 class GetNextVideoUseCase(private val repository: VideoRepository) {
     suspend fun execute(seed: Long, index: Int): VideoDto {
         val videoIds = repository.getAllVideoRefs()
-        videoIds.shuffle(Random(seed))
+        val shuffledIds = videoIds.shuffled(Random(seed))
         val validIndex = index % (videoIds.size - 1)
-        val videoId = videoIds[validIndex]
-        val video = repository.getVideoByRef(videoId) ?: throw Exception("Next video with id $videoId doesn't exist")
+        val videoId = shuffledIds[validIndex]
+        val video = repository.getVideoByRef(videoId)
+            ?: throw InvalidStateException("Next video with id $videoId doesn't exist in database")
 
-        return VideoDto(video.platformName, video.getVideoUrl())
+        return VideoDto.fromDomain(video)
     }
 }

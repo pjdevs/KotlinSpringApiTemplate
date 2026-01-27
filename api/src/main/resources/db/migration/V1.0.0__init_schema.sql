@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS video_reaction (
     video_id INTEGER NOT NULL,
     user_identity TEXT NOT NULL,
     reaction TEXT NOT NULL,
-    timestamp INT NOT NULL,
-    date DATETIME NOT NULL,
+    timestamp BIGINT NOT NULL,
+    date TEXT NOT NULL,
     CONSTRAINT fk_reaction_video FOREIGN KEY (video_id) REFERENCES video(id) ON DELETE CASCADE
 );
 

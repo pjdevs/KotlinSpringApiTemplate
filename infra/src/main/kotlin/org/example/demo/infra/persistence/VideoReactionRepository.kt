@@ -6,9 +6,8 @@ import org.example.demo.domain.models.VideoId
 import org.example.demo.domain.models.VideoReaction
 import org.example.demo.domain.ports.VideoReactionRepository
 import org.springframework.data.repository.CrudRepository
-import java.util.UUID
 
-interface VideoReactionJpaRepository : CrudRepository<VideoReactionEntity, UUID>
+interface VideoReactionJpaRepository : CrudRepository<VideoReactionEntity, Int>
 
 class JpaVideoReactionRepository(private val jpaRepository: VideoReactionJpaRepository) : VideoReactionRepository {
     override suspend fun addReaction(reaction: VideoReaction): VideoReaction =
@@ -17,8 +16,8 @@ class JpaVideoReactionRepository(private val jpaRepository: VideoReactionJpaRepo
             savedEntity.toDomain()
         }
 
-    override suspend fun getAllReactionsFor(videoId: VideoId): Array<VideoReaction> =
+    override suspend fun getAllReactionsFor(videoId: VideoId): List<VideoReaction> =
         withContext(Dispatchers.IO) {
-            jpaRepository.findAll().map { it.toDomain() }.toTypedArray()
+            jpaRepository.findAll().map { it.toDomain() }
         }
 }
