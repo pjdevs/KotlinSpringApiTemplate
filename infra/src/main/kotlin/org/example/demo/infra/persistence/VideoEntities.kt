@@ -15,8 +15,8 @@ import java.util.UUID
 @Table(name = "video")
 class VideoEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: UUID?,
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    val id: Long?,
     val platformName: String,
     val platformId: String,
     val title: String,
@@ -24,9 +24,10 @@ class VideoEntity(
     constructor() : this(null, "", "", "")
 
     fun toDomain() = Video(
-        if (id == null) null else VideoId(id),
+        if (id == null) error("Entity with no id cannot be converted to domain") else VideoId(id),
         platformName,
-        platformId
+        platformId,
+        title,
     )
 }
 
@@ -34,15 +35,15 @@ class VideoEntity(
 @Table(name = "video_reaction")
 class VideoReactionEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: UUID?,
-    val videoId: UUID,
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    val id: Long?,
+    val videoId: Long,
     val reaction: String,
     val userIdentity: String,
     val timestamp: Long,
     val date: Instant,
 ) {
-    constructor() : this(null, UUID.randomUUID(), "", "", 0, Instant.DISTANT_PAST)
+    constructor() : this(null, 0, "", "", 0, Instant.DISTANT_PAST)
 
     fun toDomain() = VideoReaction(
         VideoId(videoId),

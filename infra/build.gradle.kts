@@ -19,9 +19,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:4.0.2")
 
-    implementation("org.xerial:sqlite-jdbc:3.46.0.0")
     implementation("org.hibernate.orm:hibernate-community-dialects:6.6.4.Final")
-    implementation("org.flywaydb:flyway-core:11.20.2")
 
     implementation(project(":domain"))
     testImplementation(kotlin("test"))

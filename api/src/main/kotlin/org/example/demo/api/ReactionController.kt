@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping("/video/{videoId}")
+@RequestMapping("/video/{videoRef}")
 class ReactionController(
     private val reactToVideo: ReactToVideoUseCase,
 ) {
     @PostMapping("/react")
     suspend fun reactToVideo(
-        @PathVariable videoId: UUID,
+        @PathVariable videoRef: String,
         @RequestBody reaction: VideoReactionDto
-    ) = reactToVideo.execute(videoId, reaction)
+    ) = reactToVideo.execute(videoRef, reaction)
 }

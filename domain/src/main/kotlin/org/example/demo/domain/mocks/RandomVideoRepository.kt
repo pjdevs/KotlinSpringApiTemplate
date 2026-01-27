@@ -2,17 +2,17 @@ package org.example.demo.domain.mocks
 
 import org.example.demo.domain.models.Video
 import org.example.demo.domain.models.VideoId
+import org.example.demo.domain.models.VideoRef
 import org.example.demo.domain.ports.VideoRepository
-import java.util.UUID
 
 class RandomVideoRepository : VideoRepository {
     private val videos = arrayOf(
-        Video(VideoId(UUID.randomUUID()), "youtube", "hbHgIzIbzmQ"),
-        Video(VideoId(UUID.randomUUID()), "youtube", "sB_zRkqnfd0"),
-        Video(VideoId(UUID.randomUUID()), "youtube", "oVHpiQdd4iI")
+        Video(VideoId(0), "youtube", "hbHgIzIbzmQ", "Micode"),
+        Video(VideoId(1), "youtube", "sB_zRkqnfd0", "Yolo"),
+        Video(VideoId(2), "youtube", "oVHpiQdd4iI", "Test"),
     )
 
-    override suspend fun getVideo(videoId: VideoId) = videos.find { it.id == videoId }
+    override suspend fun getVideoByRef(videoRef: VideoRef) = videos.find { it.getRef() == videoRef }
 
-    override suspend fun getAllVideoIds() = videos.map { it.id!! }.toTypedArray()
+    override suspend fun getAllVideoRefs() = videos.map { it.getRef() }.toTypedArray()
 }

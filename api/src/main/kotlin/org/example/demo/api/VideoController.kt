@@ -15,8 +15,8 @@ class VideoController(
     private val getVideoById: GetVideoByIdUseCase,
     private val getNextVideo: GetNextVideoUseCase,
 ) {
-    @GetMapping("/{videoId}")
-    suspend fun getVideoById(@PathVariable videoId: UUID) = getVideoById.execute(videoId)
+    @GetMapping("/{videoRef}")
+    suspend fun getVideoById(@PathVariable videoRef: String) = getVideoById.execute(videoRef)
 
     @GetMapping("/next")
     suspend fun getNextVideo(@RequestParam seed: Long, @RequestParam index: Int) = getNextVideo.execute(seed, index)

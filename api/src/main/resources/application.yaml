@@ -4,11 +4,27 @@ spring:
 
   datasource:
     url: jdbc:sqlite:demodatabase.db
+    driver-class-name: org.sqlite.JDBC
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     show-sql: true
 
   flyway:
     enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: true
+
+springdoc:
+  api-docs:
+    enabled: true
+
+  swagger-ui:
+    enabled: true
+
+logging:
+  level:
+    root: info
+
+debug: true

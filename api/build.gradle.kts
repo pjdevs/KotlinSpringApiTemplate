@@ -3,6 +3,7 @@ plugins {
     kotlin("plugin.spring") version "2.3.0"
     id("org.springframework.boot") version "4.0.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.flywaydb.flyway") version "11.20.3"
     application
 }
 
@@ -18,7 +19,7 @@ kotlin {
 }
 
 application {
-    mainClass.set("org.example.demo.api.DemoApplication")
+    mainClass.set("org.example.demo.api.MainKt")
 }
 
 dependencies {
@@ -29,11 +30,16 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter:4.0.2")
     implementation("org.springframework.boot:spring-boot-starter-webflux:4.0.2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:4.0.2")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc:4.0.2")
+    implementation("org.springframework.boot:spring-boot-starter-flyway:4.0.2")
     implementation("org.springframework.boot:spring-boot-starter-actuator:4.0.2")
 
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.1")
 
     implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
+
+    implementation("org.flywaydb:flyway-core:11.20.3")
+    implementation("org.xerial:sqlite-jdbc:3.51.1.0")
 
     implementation(project(":domain"))
     implementation(project(":infra"))

@@ -6,11 +6,11 @@ import kotlin.random.Random
 
 class GetNextVideoUseCase(private val repository: VideoRepository) {
     suspend fun execute(seed: Long, index: Int): VideoDto {
-        val videoIds = repository.getAllVideoIds()
+        val videoIds = repository.getAllVideoRefs()
         videoIds.shuffle(Random(seed))
         val validIndex = index % (videoIds.size - 1)
         val videoId = videoIds[validIndex]
-        val video = repository.getVideo(videoId) ?: throw Exception("Next video doesn't exist")
+        val video = repository.getVideoByRef(videoId) ?: throw Exception("Next video with id $videoId doesn't exist")
 
         return VideoDto(video.platformName, video.getVideoUrl())
     }
