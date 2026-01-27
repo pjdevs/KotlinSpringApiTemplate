@@ -3,19 +3,18 @@ package org.example.demo.domain.models
 @JvmInline
 value class VideoId(val id: Int)
 
-class Video(val id: VideoId, val platformName: String, val platformId: String, val title: String) {
+class Video(val id: VideoId, val platform: VideoPlatform, val platformId: String, val title: String) {
     fun getVideoUrl() : String
-        = when (platformName) {
-            "youtube" -> "https://www.youtube.com/embed/$platformId"
-            else -> "unknown"
+        = when (platform) {
+            VideoPlatform.YOUTUBE -> "https://www.youtube.com/embed/$platformId"
         }
 
     fun getRef() : VideoRef {
-        return VideoRef(platformName, platformId)
+        return VideoRef(platform, platformId)
     }
 }
 
-data class VideoRef(val platformName: String, val platformId: String) {
+data class VideoRef(val platformName: VideoPlatform, val platformId: String) {
     companion object {
         @JvmStatic
         fun fromString(videoRef: String): VideoRef? {
@@ -27,6 +26,13 @@ data class VideoRef(val platformName: String, val platformId: String) {
 
             return VideoRef(parts[0], parts[1])
         }
+    }
+
+    constructor(platformName: String, platformId: String)
+            : this(VideoPlatform.fromPlatformName(platformName), platformId)
+
+    init {
+        require(platformId.isNotEmpty()) { "platformId must not be empty" }
     }
 
     override fun toString(): String = "$platformName:$platformId"

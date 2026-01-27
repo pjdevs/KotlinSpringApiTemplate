@@ -21,7 +21,7 @@ interface VideoJpaRepository : CrudRepository<VideoEntity, Int> {
     @Query("""
         SELECT v
         FROM VideoEntity v
-        WHERE v.platformName = :#{#ref.platformName} AND v.platformId = :#{#ref.platformId}
+        WHERE v.platformName LIKE :#{#ref.platformName.toString()} AND v.platformId = :#{#ref.platformId}
     """)
     fun findByRef(@Param("ref") ref: VideoRef): VideoEntity?
 

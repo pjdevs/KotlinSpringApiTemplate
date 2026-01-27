@@ -1,8 +1,8 @@
 package org.example.demo.domain.ports
 
-import org.example.demo.domain.models.Video
 import kotlin.time.Duration
 
 interface VideoPlatformApi {
-    suspend fun getVideoDuration(video: Video) : Duration
+    suspend fun fetchIsVideoExisting(videoId: String) : Boolean
+    suspend fun fetchVideoDuration(videoId: String) : Duration
 }

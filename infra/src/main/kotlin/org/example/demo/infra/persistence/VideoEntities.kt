@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.example.demo.domain.models.VideoId
+import org.example.demo.domain.models.VideoPlatform
 import org.example.demo.domain.models.VideoReaction
 import kotlin.time.Instant
 
@@ -27,7 +28,7 @@ class VideoEntity(
 ) {
     fun toDomain() = Video(
         if (id == null) error("Entity with no id cannot be converted to domain") else VideoId(id),
-        platformName,
+        VideoPlatform.fromPlatformName(platformName),
         platformId,
         title,
     )

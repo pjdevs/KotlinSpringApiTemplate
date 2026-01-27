@@ -1,11 +1,12 @@
 package org.example.demo.domain.dtos
 
 import org.example.demo.domain.models.Video
+import org.example.demo.domain.models.VideoPlatform
 
-data class VideoDto(val platformName: String, val url: String) {
+data class VideoDto(val platformName: VideoPlatform, val url: String) {
     companion object {
         fun fromDomain(video: Video): VideoDto {
-            return VideoDto(video.platformName, video.getVideoUrl())
+            return VideoDto(video.platform, video.getVideoUrl())
         }
     }
 }

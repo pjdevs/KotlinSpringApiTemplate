@@ -6,7 +6,7 @@ import org.example.demo.domain.exceptions.VideoNotFoundException
 import org.example.demo.domain.models.VideoRef
 import org.example.demo.domain.ports.VideoRepository
 
-class GetVideoByIdUseCase(private val repository: VideoRepository) {
+class GetVideoByRefUseCase(private val repository: VideoRepository) {
     suspend fun execute(videoRefString: String): VideoDto {
         val videoRef = VideoRef.fromString(videoRefString)
             ?: throw InvalidVideoRefException(videoRefString)
