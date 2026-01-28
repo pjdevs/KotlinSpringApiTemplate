@@ -1,4 +1,4 @@
-package org.example.demo.domain.mocks
+package org.example.demo.infra.auth
 
 import org.example.demo.domain.ports.CurrentUserInfo
 

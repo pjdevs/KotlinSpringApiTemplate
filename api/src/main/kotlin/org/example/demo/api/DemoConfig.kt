@@ -1,6 +1,6 @@
 package org.example.demo.api
 
-import org.example.demo.domain.mocks.UnknownCurrentUserInfo
+import org.example.demo.infra.auth.UnknownCurrentUserInfo
 import org.example.demo.domain.ports.CurrentUserInfo
 import org.example.demo.domain.ports.DomainEventPublisher
 import org.example.demo.domain.ports.TimeProvider

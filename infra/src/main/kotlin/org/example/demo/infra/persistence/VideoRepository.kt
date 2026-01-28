@@ -18,11 +18,13 @@ interface VideoJpaRepository : CrudRepository<VideoEntity, Int> {
     """)
     fun findAllRefs(): List<VideoRef>
 
-    @Query("""
+    @Query(
+        """
         SELECT v
         FROM VideoEntity v
-        WHERE v.platformName LIKE :#{#ref.platformName.toString()} AND v.platformId = :#{#ref.platformId}
-    """)
+        WHERE v.platformName LIKE :#{#ref.platform.toString()} AND v.platformId = :#{#ref.platformId}
+    """
+    )
     fun findByRef(@Param("ref") ref: VideoRef): VideoEntity?
 
     @Query("""

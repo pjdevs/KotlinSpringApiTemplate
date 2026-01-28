@@ -14,7 +14,7 @@ class Video(val id: VideoId, val platform: VideoPlatform, val platformId: String
     }
 }
 
-data class VideoRef(val platformName: VideoPlatform, val platformId: String) {
+data class VideoRef(val platform: VideoPlatform, val platformId: String) {
     companion object {
         @JvmStatic
         fun fromString(videoRef: String): VideoRef? {
@@ -35,5 +35,5 @@ data class VideoRef(val platformName: VideoPlatform, val platformId: String) {
         require(platformId.isNotEmpty()) { "platformId must not be empty" }
     }
 
-    override fun toString(): String = "$platformName:$platformId"
+    override fun toString(): String = "$platform:$platformId"
 }

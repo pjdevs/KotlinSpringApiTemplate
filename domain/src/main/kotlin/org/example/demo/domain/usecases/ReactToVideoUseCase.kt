@@ -13,6 +13,7 @@ import org.example.demo.domain.ports.TimeProvider
 import org.example.demo.domain.ports.VideoPlatformApiFactory
 import org.example.demo.domain.ports.VideoReactionRepository
 import org.example.demo.domain.ports.VideoRepository
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 class ReactToVideoUseCase(
@@ -29,24 +30,27 @@ class ReactToVideoUseCase(
         val video = videoRepository.getVideoByRef(videoRef) ?: throw VideoNotFoundException(videoRef)
 
         // Validate via platform API
+        // (totally fake, the only place we could validate video via platform API is on creation)
+        // (but this is for demonstration purposes)
         val api = videoPlatformApiFactory.create(video.platform)
+        val isVideoExisting: Boolean
+        val videoDuration: Duration
 
         try {
-            val isVideoExisting = api.fetchIsVideoExisting(video.platformId)
-
-            if (!isVideoExisting) {
-                throw VideoNotFoundException(videoRef)
-            }
-
-            val videoDuration = api.fetchVideoDuration(video.platformId)
-
-            if (reaction.timestamp < 0 || reaction.timestamp.seconds > videoDuration) {
-                throw InvalidReactionException("Timestamp ${reaction.timestamp} is out of video duration bounds")
-            }
+            isVideoExisting = api.fetchIsVideoExisting(video.platformId)
+            videoDuration = api.fetchVideoDuration(video.platformId)
         } catch (e: Exception) {
             // put the operation in retry queue etc. if it was network failure
             // here we just return 500
-            throw InvalidStateException("Could not contact platform API for ${video.platform}")
+            throw InvalidStateException("Could not contact platform API for ${video.platform}: ${e.message}")
+        }
+
+        if (!isVideoExisting) {
+            throw VideoNotFoundException(videoRef)
+        }
+
+        if (reaction.timestamp < 0 || reaction.timestamp.seconds > videoDuration) {
+            throw InvalidReactionException("Timestamp ${reaction.timestamp} is out of video duration bounds")
         }
 
         // Create the reaction

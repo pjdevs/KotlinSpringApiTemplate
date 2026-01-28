@@ -22,6 +22,8 @@ application {
     mainClass.set("org.example.demo.api.MainKt")
 }
 
+val profile = System.getenv("SPRING_PROFILES_ACTIVE") ?: "dev"
+
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.2")
@@ -39,7 +41,10 @@ dependencies {
     implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
 
     implementation("org.flywaydb:flyway-core:11.20.3")
+    implementation("org.flywaydb:flyway-database-postgresql:11.20.3")
+
     implementation("org.xerial:sqlite-jdbc:3.51.1.0")
+    implementation("org.postgresql:postgresql:42.7.9")
 
     implementation(project(":domain"))
     implementation(project(":infra"))
