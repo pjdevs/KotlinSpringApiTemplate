@@ -2,7 +2,6 @@ package org.example.demo.domain.usecases
 
 import org.example.demo.domain.dtos.VideoReactionDto
 import org.example.demo.domain.exceptions.InvalidReactionException
-import org.example.demo.domain.exceptions.InvalidStateException
 import org.example.demo.domain.exceptions.InvalidVideoRefException
 import org.example.demo.domain.exceptions.VideoNotFoundException
 import org.example.demo.domain.models.VideoReaction
@@ -13,7 +12,6 @@ import org.example.demo.domain.ports.TimeProvider
 import org.example.demo.domain.ports.VideoPlatformApiFactory
 import org.example.demo.domain.ports.VideoReactionRepository
 import org.example.demo.domain.ports.VideoRepository
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 class ReactToVideoUseCase(

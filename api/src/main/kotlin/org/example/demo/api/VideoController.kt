@@ -11,7 +11,6 @@ import org.example.demo.domain.dtos.VideoDto
 import org.example.demo.domain.usecases.GetNextVideoUseCase
 import org.example.demo.domain.usecases.GetTrendingVideosUseCase
 import org.example.demo.domain.usecases.GetVideoByRefUseCase
-import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
