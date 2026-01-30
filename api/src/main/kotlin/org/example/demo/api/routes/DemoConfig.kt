@@ -13,7 +13,6 @@ import org.example.demo.domain.usecases.GetTrendingVideosUseCase
 import org.example.demo.domain.usecases.GetVideoByRefUseCase
 import org.example.demo.domain.usecases.ReactToVideoUseCase
 import org.example.demo.infra.apis.FakeVideoPlatformApiFactory
-import org.example.demo.infra.auth.UnknownCurrentUserInfo
 import org.example.demo.infra.event.LogDomainEventPublisher
 import org.example.demo.infra.persistence.JpaVideoReactionRepository
 import org.example.demo.infra.persistence.JpaVideoRepository
