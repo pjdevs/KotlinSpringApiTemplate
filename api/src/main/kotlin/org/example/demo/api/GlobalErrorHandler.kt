@@ -6,6 +6,7 @@ import org.example.demo.domain.exceptions.InvalidReactionException
 import org.example.demo.domain.exceptions.InvalidStateException
 import org.example.demo.domain.exceptions.InvalidVideoRefException
 import org.example.demo.domain.exceptions.VideoNotFoundException
+import org.example.demo.domain.exceptions.VideoPlatformApiException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -32,6 +33,10 @@ class GlobalErrorHandler {
     @ExceptionHandler(InvalidReactionException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleException(e: InvalidReactionException) = ApiErrorDto(HttpStatus.BAD_REQUEST.value(), e.message)
+
+    @ExceptionHandler(VideoPlatformApiException::class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    fun handleException(e: VideoPlatformApiException) = ApiErrorDto(HttpStatus.SERVICE_UNAVAILABLE.value(), e.message)
 
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

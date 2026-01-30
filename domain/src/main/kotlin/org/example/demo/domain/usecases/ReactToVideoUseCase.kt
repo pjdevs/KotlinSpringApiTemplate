@@ -29,21 +29,10 @@ class ReactToVideoUseCase(
         val videoRef = VideoRef.fromString(videoRefString) ?: throw InvalidVideoRefException(videoRefString)
         val video = videoRepository.getVideoByRef(videoRef) ?: throw VideoNotFoundException(videoRef)
 
-        // Validate via platform API
-        // (totally fake, the only place we could validate video via platform API is on creation)
-        // (but this is for demonstration purposes)
+        // Validate infos
         val api = videoPlatformApiFactory.create(video.platform)
-        val isVideoExisting: Boolean
-        val videoDuration: Duration
-
-        try {
-            isVideoExisting = api.fetchIsVideoExisting(video.platformId)
-            videoDuration = api.fetchVideoDuration(video.platformId)
-        } catch (e: Exception) {
-            // put the operation in retry queue etc. if it was network failure
-            // here we just return 500
-            throw InvalidStateException("Could not contact platform API for ${video.platform}: ${e.message}")
-        }
+        val isVideoExisting = api.fetchIsVideoExisting(video.platformId)
+        val videoDuration = api.fetchVideoDuration(video.platformId)
 
         if (!isVideoExisting) {
             throw VideoNotFoundException(videoRef)

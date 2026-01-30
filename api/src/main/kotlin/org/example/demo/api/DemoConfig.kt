@@ -11,6 +11,7 @@ import org.example.demo.infra.persistence.VideoJpaRepository
 import org.example.demo.infra.persistence.VideoReactionJpaRepository
 import org.example.demo.domain.ports.VideoReactionRepository
 import org.example.demo.domain.ports.VideoRepository
+import org.example.demo.domain.usecases.AddVideoUseCase
 import org.example.demo.domain.usecases.GetNextVideoUseCase
 import org.example.demo.domain.usecases.GetTrendingVideosUseCase
 import org.example.demo.domain.usecases.GetVideoByRefUseCase
@@ -28,7 +29,8 @@ class DemoConfig {
     fun videoRepository(jpaRepository: VideoJpaRepository): VideoRepository = JpaVideoRepository(jpaRepository)
 
     @Bean
-    fun videoReactionRepository(jpaRepository: VideoReactionJpaRepository): VideoReactionRepository = JpaVideoReactionRepository(jpaRepository)
+    fun videoReactionRepository(jpaRepository: VideoReactionJpaRepository): VideoReactionRepository =
+        JpaVideoReactionRepository(jpaRepository)
 
     @Bean
     fun getNextVideoUseCase(repository: VideoRepository): GetNextVideoUseCase = GetNextVideoUseCase(repository)
@@ -37,7 +39,8 @@ class DemoConfig {
     fun getVideoByRefUseCase(repository: VideoRepository): GetVideoByRefUseCase = GetVideoByRefUseCase(repository)
 
     @Bean
-    fun getTrendingVideosUseCase(repository: VideoRepository): GetTrendingVideosUseCase = GetTrendingVideosUseCase(repository)
+    fun getTrendingVideosUseCase(repository: VideoRepository): GetTrendingVideosUseCase =
+        GetTrendingVideosUseCase(repository)
 
     @Bean
     fun getTimeProvider(): TimeProvider = SystemTimeProvider()
@@ -68,4 +71,12 @@ class DemoConfig {
         videoPlatformApiFactory,
     )
 
+    @Bean
+    fun addVideoUseCase(
+        videoRepository: VideoRepository,
+        videoPlatformApiFactory: VideoPlatformApiFactory,
+    ): AddVideoUseCase = AddVideoUseCase(
+        videoRepository,
+        videoPlatformApiFactory,
+    )
 }

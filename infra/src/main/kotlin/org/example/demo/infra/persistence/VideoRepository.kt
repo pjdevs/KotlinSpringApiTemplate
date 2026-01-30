@@ -2,6 +2,7 @@ package org.example.demo.infra.persistence
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.example.demo.domain.models.DraftVideo
 import org.example.demo.domain.models.Video
 import org.example.demo.domain.models.VideoRef
 import org.example.demo.domain.ports.VideoRepository
@@ -54,4 +55,8 @@ class JpaVideoRepository(private val jpaRepository: VideoJpaRepository) : VideoR
                 .findTopVideosByReactionCount(PageRequest.of(0, max))
                 .map { it.toDomain() }
         }
+
+    override suspend fun saveVideo(video: DraftVideo): Video = withContext(Dispatchers.IO) {
+        jpaRepository.save(video.toEntity()).toDomain()
+    }
 }

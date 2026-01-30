@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS video
     id            INTEGER PRIMARY KEY NOT NULL,
     platform_name TEXT                NOT NULL,
     platform_id   TEXT                NOT NULL,
-    title         TEXT                NOT NULL
+    title         TEXT                NOT NULL,
+    duration      BIGINT              NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS video_reaction

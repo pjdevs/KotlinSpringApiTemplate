@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/videos", produces = [(MediaType.APPLICATION_JSON_VALUE)])
+@RequestMapping("/v1/videos")
 @Tag(name = "Video API v1", description = "Operations on videos (v1)")
 class VideoController(
     private val getVideoById: GetVideoByRefUseCase,
@@ -28,7 +28,7 @@ class VideoController(
 ) {
     @GetMapping("/{videoRef}")
     @Operation(
-        summary = "Get a video by ID",
+        summary = "Get a video by ref (in form 'platformName:platformId')",
         description = "Version 1 of the API",
         tags = ["Video API v1"]
     )

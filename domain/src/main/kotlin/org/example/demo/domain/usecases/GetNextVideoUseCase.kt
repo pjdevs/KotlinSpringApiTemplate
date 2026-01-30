@@ -2,6 +2,7 @@ package org.example.demo.domain.usecases
 
 import org.example.demo.domain.dtos.VideoDto
 import org.example.demo.domain.exceptions.InvalidStateException
+import org.example.demo.domain.exceptions.InvalidVideoRefException
 import org.example.demo.domain.ports.VideoRepository
 import kotlin.random.Random
 

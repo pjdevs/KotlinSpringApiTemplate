@@ -3,7 +3,13 @@ package org.example.demo.domain.models
 @JvmInline
 value class VideoId(val id: Int)
 
-class Video(val id: VideoId, val platform: VideoPlatform, val platformId: String, val title: String) {
+data class Video(
+    val id: VideoId,
+    val platform: VideoPlatform,
+    val platformId: String,
+    val title: String,
+    val duration: Long,
+) {
     fun getVideoUrl() : String
         = when (platform) {
             VideoPlatform.YOUTUBE -> "https://www.youtube.com/embed/$platformId"
@@ -37,3 +43,5 @@ data class VideoRef(val platform: VideoPlatform, val platformId: String) {
 
     override fun toString(): String = "$platform:$platformId"
 }
+
+data class DraftVideo(val platform: VideoPlatform, val platformId: String, val title: String, val duration: Long)

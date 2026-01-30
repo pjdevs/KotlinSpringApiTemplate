@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import org.example.demo.domain.models.DraftVideo
 import org.example.demo.domain.models.VideoId
 import org.example.demo.domain.models.VideoPlatform
 import org.example.demo.domain.models.VideoReaction
@@ -25,12 +26,15 @@ class VideoEntity(
     val platformId: String = "",
     @Column(name = "title", nullable = false)
     val title: String = "",
+    @Column(name = "duration", nullable = false)
+    val duration: Long = 0,
 ) {
     fun toDomain() = Video(
         if (id == null) error("Entity with no id cannot be converted to domain") else VideoId(id),
         VideoPlatform.fromPlatformName(platformName),
         platformId,
         title,
+        duration,
     )
 }
 
@@ -60,6 +64,14 @@ class VideoReactionEntity(
         Instant.parse(date),
     )
 }
+
+fun DraftVideo.toEntity() : VideoEntity = VideoEntity(
+    id = null,
+    platformName = platform.toString(),
+    platformId = platformId,
+    title = title,
+    duration = duration,
+)
 
 fun VideoReaction.toEntity() : VideoReactionEntity = VideoReactionEntity(
     null,

@@ -6,6 +6,6 @@ import org.example.demo.domain.ports.VideoPlatformApiFactory
 
 class FakeVideoPlatformApiFactory : VideoPlatformApiFactory {
     override fun create(platform: VideoPlatform): VideoPlatformApi = when (platform) {
-        VideoPlatform.YOUTUBE -> FakeVideoPlatformApi()
+        VideoPlatform.YOUTUBE -> FakeVideoPlatformApi(VideoPlatform.YOUTUBE)
     }
 }
