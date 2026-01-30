@@ -36,6 +36,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-flyway:4.0.2")
     implementation("org.springframework.boot:spring-boot-starter-actuator:4.0.2")
     implementation("org.springframework.boot:spring-boot-starter-opentelemetry:4.0.2")
+    implementation("org.springframework.boot:spring-boot-starter-security:4.0.2")
 
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.1")
 

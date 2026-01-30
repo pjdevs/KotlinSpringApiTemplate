@@ -1,4 +1,4 @@
-package org.example.demo.api
+package org.example.demo.api.routes
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.example.demo.domain.dtos.ApiErrorDto
 import org.example.demo.domain.dtos.VideoReactionDto
 import org.example.demo.domain.usecases.ReactToVideoUseCase
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v1/videos/{videoRef}")
 @Tag(name = "Reaction API v1", description = "Operations related to reactions (v1)")
+@SecurityRequirement(name = "App Bearer Token")
 class ReactionController(
     private val reactToVideo: ReactToVideoUseCase,
 ) {
@@ -41,6 +43,16 @@ class ReactionController(
         ApiResponse(
             responseCode = "404",
             description = "Video not found",
+            content = [
+                Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = ApiErrorDto::class)
+                )
+            ]
+        ),
+        ApiResponse(
+            responseCode = "401",
+            description = "Invalid App Bearer Token",
             content = [
                 Content(
                     mediaType = "application/json",

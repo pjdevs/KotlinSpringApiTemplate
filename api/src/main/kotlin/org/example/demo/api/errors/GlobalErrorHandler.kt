@@ -1,4 +1,4 @@
-package org.example.demo.api
+package org.example.demo.api.errors
 
 import io.swagger.v3.oas.annotations.Hidden
 import org.example.demo.domain.dtos.ApiErrorDto

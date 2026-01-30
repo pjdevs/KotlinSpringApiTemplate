@@ -31,3 +31,9 @@ springdoc:
 logging:
   level:
     root: debug
+
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: false

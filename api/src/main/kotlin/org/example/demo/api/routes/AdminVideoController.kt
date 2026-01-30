@@ -1,10 +1,11 @@
-package org.example.demo.api
+package org.example.demo.api.routes
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.example.demo.domain.dtos.ApiErrorDto
 import org.example.demo.domain.models.VideoRef
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v1/videos")
 @Tag(name = "Admin Video API v1", description = "Admin operations on videos (v1)")
+@SecurityRequirement(name = "App Bearer Token")
 class AdminVideoController(
     private val addVideoUseCase: AddVideoUseCase,
 ) {
@@ -28,6 +30,16 @@ class AdminVideoController(
     )
     @ApiResponses(
         ApiResponse(
+            responseCode = "503",
+            description = "Platform API Unavailable",
+            content = [
+                Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = ApiErrorDto::class)
+                )
+            ]
+        ),
+        ApiResponse(
             responseCode = "500",
             description = "Internal Server Error",
             content = [
@@ -38,8 +50,28 @@ class AdminVideoController(
             ]
         ),
         ApiResponse(
-            responseCode = "503",
-            description = "Service Unavailable",
+            responseCode = "403",
+            description = "User not admin",
+            content = [
+                Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = ApiErrorDto::class)
+                )
+            ]
+        ),
+        ApiResponse(
+            responseCode = "401",
+            description = "Invalid App Bearer Token",
+            content = [
+                Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = ApiErrorDto::class)
+                )
+            ]
+        ),
+        ApiResponse(
+            responseCode = "400",
+            description = "Invalid video ref",
             content = [
                 Content(
                     mediaType = "application/json",

@@ -33,3 +33,10 @@ springdoc:
 logging:
   level:
     root: info
+
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: true
+        step: 30s
