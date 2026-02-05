@@ -7,9 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.example.demo.domain.models.User
-import org.example.demo.domain.models.UserRole
 import org.example.demo.domain.utils.parseRoleSet
-import org.example.demo.domain.utils.toRoleString
 
 @Entity
 @Table(name = "user")
