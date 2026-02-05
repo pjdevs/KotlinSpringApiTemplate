@@ -15,11 +15,4 @@ class DemoApplicationTests {
     fun contextLoads() {
     }
 
-    @Test
-    fun hashPassword() {
-        val encoder = BCryptPasswordEncoder()
-        val userHash = encoder.encode("userPassword")
-        val adminHash = encoder.encode("adminPassword")
-    }
-
 }

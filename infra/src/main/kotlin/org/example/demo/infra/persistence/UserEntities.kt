@@ -38,10 +38,3 @@ class UserEntity(
         }
     }
 }
-
-fun User.toEntity() : UserEntity = UserEntity(
-    id = null,
-    userName = userName,
-    passwordHash = passwordHash,
-    roles = roles.toRoleString(),
-)
