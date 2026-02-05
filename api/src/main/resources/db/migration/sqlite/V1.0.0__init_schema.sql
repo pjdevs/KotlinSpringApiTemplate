@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS video_reaction
 CREATE TABLE IF NOT EXISTS user
 (
     id            INTEGER PRIMARY KEY NOT NULL,
-    username      TEXT                NOT NULL,
+    username      TEXT                NOT NULL UNIQUE,
     password_hash TEXT                NOT NULL,
     roles         TEXT                NOT NULL
 );
