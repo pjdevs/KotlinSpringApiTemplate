@@ -36,5 +36,9 @@ management:
   otlp:
     metrics:
       export:
-        enabled: true
+        enabled: false
         step: 1s
+
+jwt:
+  secret: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  expiration: 3600000

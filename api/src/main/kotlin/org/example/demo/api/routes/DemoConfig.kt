@@ -1,9 +1,13 @@
 package org.example.demo.api.routes
 
 import org.example.demo.api.auth.SecurityCurrentUserInfo
+import org.example.demo.api.auth.SecurityPasswordHasher
 import org.example.demo.domain.ports.CurrentUserInfo
 import org.example.demo.domain.ports.DomainEventPublisher
+import org.example.demo.domain.ports.PasswordHasher
 import org.example.demo.domain.ports.TimeProvider
+import org.example.demo.domain.ports.TokenService
+import org.example.demo.domain.ports.UserRepository
 import org.example.demo.domain.ports.VideoPlatformApiFactory
 import org.example.demo.domain.ports.VideoReactionRepository
 import org.example.demo.domain.ports.VideoRepository
@@ -11,16 +15,20 @@ import org.example.demo.domain.usecases.AddVideoUseCase
 import org.example.demo.domain.usecases.GetNextVideoUseCase
 import org.example.demo.domain.usecases.GetTrendingVideosUseCase
 import org.example.demo.domain.usecases.GetVideoByRefUseCase
+import org.example.demo.domain.usecases.LoginUseCase
 import org.example.demo.domain.usecases.ReactToVideoUseCase
 import org.example.demo.infra.apis.FakeVideoPlatformApiFactory
 import org.example.demo.infra.event.LogDomainEventPublisher
+import org.example.demo.infra.persistence.JpaUserRepository
 import org.example.demo.infra.persistence.JpaVideoReactionRepository
 import org.example.demo.infra.persistence.JpaVideoRepository
+import org.example.demo.infra.persistence.UserJpaRepository
 import org.example.demo.infra.persistence.VideoJpaRepository
 import org.example.demo.infra.persistence.VideoReactionJpaRepository
 import org.example.demo.infra.time.SystemTimeProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Configuration
 class DemoConfig {
@@ -79,4 +87,7 @@ class DemoConfig {
         videoRepository,
         videoPlatformApiFactory,
     )
+
+    @Bean
+    fun userRepository(jpaRepository: UserJpaRepository): UserRepository = JpaUserRepository(jpaRepository)
 }

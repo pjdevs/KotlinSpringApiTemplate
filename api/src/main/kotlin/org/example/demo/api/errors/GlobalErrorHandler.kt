@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.reactive.resource.NoResourceFoundException
 import org.springframework.web.server.MissingRequestValueException
+import org.springframework.web.server.ServerWebInputException
 
 @RestControllerAdvice
 @Hidden
@@ -45,6 +46,10 @@ class GlobalErrorHandler {
     @ExceptionHandler(MissingRequestValueException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleBadRequest(e: MissingRequestValueException) = ApiErrorDto(HttpStatus.BAD_REQUEST.value(), e.message)
+
+    @ExceptionHandler(ServerWebInputException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleBadRequest(e: ServerWebInputException) = ApiErrorDto(HttpStatus.BAD_REQUEST.value(), e.message)
 
     @ExceptionHandler(NoResourceFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

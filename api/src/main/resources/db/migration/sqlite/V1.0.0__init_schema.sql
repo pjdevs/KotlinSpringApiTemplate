@@ -18,4 +18,12 @@ CREATE TABLE IF NOT EXISTS video_reaction
     CONSTRAINT fk_reaction_video FOREIGN KEY (video_id) REFERENCES video (id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS user
+(
+    id            INTEGER PRIMARY KEY NOT NULL,
+    username      TEXT                NOT NULL,
+    password_hash TEXT                NOT NULL,
+    roles         TEXT                NOT NULL
+);
+
 CREATE INDEX idx_video_id ON video (platform_name, platform_id);

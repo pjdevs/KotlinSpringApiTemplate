@@ -2,6 +2,11 @@ package org.example.demo.api.auth
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
+import org.example.demo.domain.ports.PasswordHasher
+import org.example.demo.domain.ports.TokenService
+import org.example.demo.domain.ports.UserRepository
+import org.example.demo.domain.usecases.LoginUseCase
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -22,10 +27,19 @@ class SecurityConfig {
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
+    fun tokenService(
+        @Value($$"${jwt.secret}") secret: String,
+        @Value($$"${jwt.expiration:3600000}") expiration: Long // 1h default
+    ): TokenService = JwtTokenService(secret, expiration)
+
+    @Bean
+    fun tokenAuthenticationFilter(tokenService: TokenService) = TokenAuthenticationFilter(tokenService)
+
+    @Bean
     fun securityFilterChain(
         http: ServerHttpSecurity,
-        authenticationFilter: DemoAuthenticationFilter,
-        ): SecurityWebFilterChain =
+        authenticationFilter: TokenAuthenticationFilter,
+    ): SecurityWebFilterChain =
         http
             .csrf { it.disable() }
             .httpBasic { it.disable() }
@@ -42,4 +56,18 @@ class SecurityConfig {
             }
             .addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
             .build()
+
+    @Bean
+    fun passwordHasher(encoder: PasswordEncoder): PasswordHasher = SecurityPasswordHasher(encoder)
+
+    @Bean
+    fun loginUseCase(
+        userRepository: UserRepository,
+        tokenService: TokenService,
+        passwordHasher: PasswordHasher,
+    ) = LoginUseCase(
+        userRepository,
+        tokenService,
+        passwordHasher,
+    )
 }

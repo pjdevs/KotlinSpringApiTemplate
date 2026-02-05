@@ -8,7 +8,7 @@ plugins {
 }
 
 version = "0.0.1"
-description = "API project using Spring Boot"
+description = "Video Reaction API sample project using Spring Boot"
 
 repositories {
     mavenCentral()
@@ -21,8 +21,6 @@ kotlin {
 application {
     mainClass.set("org.example.demo.api.MainKt")
 }
-
-val profile = System.getenv("SPRING_PROFILES_ACTIVE") ?: "dev"
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
@@ -41,6 +39,10 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.1")
 
     implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
+
+    implementation("io.jsonwebtoken:jjwt-api:0.13.0")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
 
     implementation("org.flywaydb:flyway-core:11.20.3")
     implementation("org.flywaydb:flyway-database-postgresql:11.20.3")

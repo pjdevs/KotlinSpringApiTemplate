@@ -40,3 +40,7 @@ management:
       export:
         enabled: true
         step: 30s
+
+jwt:
+  secret: edc0c2ea99387d88f8bea095099ba9a90ac194796414375885c77d59ca850c68
+  expiration: 3600000

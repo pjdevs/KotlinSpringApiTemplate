@@ -3,7 +3,7 @@ package org.example.demo.domain.models
 @JvmInline
 value class VideoId(val id: Int)
 
-data class Video(
+class Video(
     val id: VideoId,
     val platform: VideoPlatform,
     val platformId: String,
@@ -20,7 +20,7 @@ data class Video(
     }
 }
 
-data class VideoRef(val platform: VideoPlatform, val platformId: String) {
+class VideoRef(val platform: VideoPlatform, val platformId: String) {
     companion object {
         @JvmStatic
         fun fromString(videoRef: String): VideoRef? {
@@ -44,4 +44,4 @@ data class VideoRef(val platform: VideoPlatform, val platformId: String) {
     override fun toString(): String = "$platform:$platformId"
 }
 
-data class DraftVideo(val platform: VideoPlatform, val platformId: String, val title: String, val duration: Long)
+class DraftVideo(val platform: VideoPlatform, val platformId: String, val title: String, val duration: Long)

@@ -37,3 +37,7 @@ management:
     metrics:
       export:
         enabled: false
+
+jwt:
+  secret: test
+  expiration: 3600000
