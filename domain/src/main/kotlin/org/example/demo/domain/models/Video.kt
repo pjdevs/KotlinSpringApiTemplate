@@ -42,6 +42,13 @@ class VideoRef(val platform: VideoPlatform, val platformId: String) {
     }
 
     override fun toString(): String = "$platform:$platformId"
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VideoRef) return false
+
+        return platform == other.platform && platformId == other.platformId
+    }
 }
 
 class DraftVideo(val platform: VideoPlatform, val platformId: String, val title: String, val duration: Long)

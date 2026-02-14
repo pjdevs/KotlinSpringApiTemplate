@@ -61,7 +61,8 @@ class ReactToVideoUseCaseTest {
             id = VideoId(1),
             platform = videoRef.platform,
             platformId = videoRef.platformId,
-            title = "test"
+            title = "test",
+            duration = 100
         )
 
         val reactionDto = VideoReactionDto(
@@ -73,7 +74,7 @@ class ReactToVideoUseCaseTest {
         every { videoPlatformApiFactory.create(video.platform) } returns platformApi
         coEvery { platformApi.fetchIsVideoExisting(video.platformId) } returns true
         coEvery { platformApi.fetchVideoDuration(video.platformId) } returns 120.seconds
-        every { currentUserInfo.getUserName() } returns "john"
+        coEvery { currentUserInfo.getUserName() } returns "john"
         every { timeProvider.now() } returns fixedNow
 
         useCase.execute(videoRefString, reactionDto)
@@ -118,7 +119,7 @@ class ReactToVideoUseCaseTest {
     fun `video not found on platform throws VideoNotFoundException`() = runTest {
         val refString = "youtube:abc"
         val ref = VideoRef.fromString(refString)!!
-        val video = Video(VideoId(1), ref.platform, ref.platformId, "test")
+        val video = Video(VideoId(1), ref.platform, ref.platformId, "test", 100)
 
         coEvery { videoRepository.getVideoByRef(ref) } returns video
         every { videoPlatformApiFactory.create(video.platform) } returns platformApi
@@ -134,7 +135,7 @@ class ReactToVideoUseCaseTest {
     fun `invalid timestamp throws InvalidReactionException`() = runTest {
         val refString = "youtube:abc"
         val ref = VideoRef.fromString(refString)!!
-        val video = Video(VideoId(1), ref.platform, ref.platformId, "test")
+        val video = Video(VideoId(1), ref.platform, ref.platformId, "test", 100)
 
         coEvery { videoRepository.getVideoByRef(ref) } returns video
         every { videoPlatformApiFactory.create(video.platform) } returns platformApi
@@ -150,11 +151,11 @@ class ReactToVideoUseCaseTest {
     fun `platform api failure throws InvalidStateException`() = runTest {
         val refString = "youtube:abc"
         val ref = VideoRef.fromString(refString)!!
-        val video = Video(VideoId(1), ref.platform, ref.platformId, "test")
+        val video = Video(VideoId(1), ref.platform, ref.platformId, "test", 100)
 
         coEvery { videoRepository.getVideoByRef(ref) } returns video
         every { videoPlatformApiFactory.create(video.platform) } returns platformApi
-        coEvery { platformApi.fetchIsVideoExisting(video.platformId) } throws RuntimeException("network down")
+        coEvery { platformApi.fetchIsVideoExisting(video.platformId) } throws InvalidStateException("Network down")
 
         assertThrows<InvalidStateException> {
             useCase.execute(refString, VideoReactionDto("LIKE", 10))
